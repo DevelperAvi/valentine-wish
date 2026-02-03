@@ -6,137 +6,181 @@
     <title>For My Forever | Mary</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root { --rose: #ff4d6d; --wine: #590d22; --cream: #fff9f8; }
-        * { box-sizing: border-box; scroll-behavior: smooth; }
-        body { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; background-color: var(--cream); color: var(--wine); overflow-x: hidden; }
-
-        /* Uploader Styling */
-        #admin-panel {
-            position: fixed; top: 10px; left: 10px; z-index: 10000;
-            background: white; padding: 15px; border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2); font-size: 0.8rem;
-            max-width: 250px; border: 2px solid var(--rose);
+        :root { --rose: #ff4d6d; --wine: #590d22; --cream: #fff9f8; --glass: rgba(255, 255, 255, 0.95); }
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; padding: 0; font-family: 'Poppins', sans-serif; 
+            background: radial-gradient(circle at center, #fff5f5 0%, #fad0c4 100%);
+            height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; 
         }
-        .upload-row { margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .upload-row input { font-size: 0.7rem; width: 120px; }
-        .hide-admin { display: none !important; }
 
-        /* Main Sections */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background-size: cover; background-position: center; position: relative; }
-        .hero h1 { font-family: 'Dancing Script', cursive; font-size: 4.5rem; text-shadow: 2px 2px 15px rgba(255,255,255,0.9); }
+        /* Hidden Upload Panel */
+        #admin-panel {
+            display: none; position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+            background: white; padding: 20px; border-radius: 20px; z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 280px; border: 1px solid var(--rose);
+        }
+        .upload-row { margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; }
         
-        .story-section { padding: 80px 20px; max-width: 600px; margin: 0 auto; text-align: center; opacity: 0; transform: translateY(40px); transition: 1s; }
-        .story-section.visible { opacity: 1; transform: translateY(0); }
-        
-        .img-card { width: 100%; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); margin-bottom: 25px; border: 10px solid white; object-fit: cover; height: 400px; }
-        
-        .day-label { font-size: 0.75rem; font-weight: 600; color: var(--rose); text-transform: uppercase; letter-spacing: 4px; display: block; margin-bottom: 10px; }
-        h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin: 0; }
-        .quote { font-style: italic; line-height: 1.8; color: #555; margin-top: 15px; }
+        /* The Little Settings Button */
+        #setup-trigger {
+            background: none; border: none; color: #ccc; cursor: pointer;
+            font-size: 1.2rem; margin-top: 15px; transition: 0.3s;
+        }
+        #setup-trigger:hover { color: var(--rose); }
 
-        .proposal-area { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fff0f3; padding: 60px 20px; text-align: center; }
-        .btn-group { display: flex; gap: 20px; margin-top: 40px; position: relative; }
-        .btn { padding: 15px 40px; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .btn-yes { background: var(--rose); color: white; }
+        /* Card Styling */
+        .main-card {
+            background: var(--glass); backdrop-filter: blur(10px);
+            width: 90%; max-width: 400px; border-radius: 40px;
+            padding: 30px; box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+            text-align: center; position: relative; z-index: 10;
+        }
+
+        .img-wrapper { width: 100%; height: 280px; border-radius: 25px; overflow: hidden; margin-bottom: 20px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        h1 { font-family: 'Playfair Display', serif; color: var(--wine); font-size: 1.8rem; margin: 10px 0; }
+        .quote-text { font-size: 0.95rem; color: #555; min-height: 60px; line-height: 1.6; margin-bottom: 20px; }
+
+        /* Navigation */
+        .btn-container { display: flex; gap: 10px; justify-content: center; }
+        .btn { padding: 12px 25px; border: none; border-radius: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-next { background: var(--wine); color: white; flex: 2; }
+        .btn-back { background: #eee; color: #777; flex: 1; }
+        
+        /* Final Proposal "No" constraint */
         .btn-no { background: white; color: #999; border: 1px solid #ddd; }
 
-        #toTopBtn { position: fixed; bottom: 20px; right: 20px; background: var(--wine); color: white; width: 45px; height: 45px; border-radius: 50%; border: none; display: none; z-index: 1000; }
-        .heart { position: fixed; pointer-events: none; z-index: 999; animation: floatUp 4s forwards; }
+        .heart { position: fixed; pointer-events: none; animation: floatUp 4s forwards; z-index: 999; }
         @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <div id="admin-panel">
-        <strong style="color:var(--rose)">Step 1: Upload Photos</strong>
-        <p style="font-size: 0.7rem; margin: 5px 0;">Replace placeholder images locally:</p>
-        <div class="upload-row"><span>Img 1:</span> <input type="file" onchange="previewImg(event, 'img1-slot')"></div>
-        <div class="upload-row"><span>Img 2:</span> <input type="file" onchange="previewImg(event, 'img2-slot')"></div>
-        <div class="upload-row"><span>Img 3:</span> <input type="file" onchange="previewImg(event, 'img3-slot')"></div>
-        <div class="upload-row"><span>Img 4:</span> <input type="file" onchange="previewImg(event, 'img4-slot')"></div>
-        <div class="upload-row"><span>Img 5:</span> <input type="file" onchange="previewImg(event, 'img5-slot')"></div>
-        <button onclick="document.getElementById('admin-panel').classList.add('hide-admin')" style="width:100%; cursor:pointer; background:var(--wine); color:white; border:none; padding:5px; border-radius:5px;">Done & Hide Panel</button>
+    <audio id="bg-music" loop><source id="music-src" src=""></audio>
+
+    <div class="main-card">
+        <div id="admin-panel">
+            <strong style="color:var(--rose); font-size: 0.9rem;">Setup Your Story</strong>
+            <div class="upload-row"><span>Img 1:</span> <input type="file" onchange="previewImg(event, 0)"></div>
+            <div class="upload-row"><span>Img 2:</span> <input type="file" onchange="previewImg(event, 1)"></div>
+            <div class="upload-row"><span>Img 3:</span> <input type="file" onchange="previewImg(event, 2)"></div>
+            <div class="upload-row"><span>Img 4:</span> <input type="file" onchange="previewImg(event, 3)"></div>
+            <div class="upload-row"><span>Img 5:</span> <input type="file" onchange="previewImg(event, 4)"></div>
+            <input type="text" id="music-url" placeholder="Paste MP3 Link" style="width:100%; margin: 5px 0; font-size: 0.7rem; padding: 5px; border-radius: 5px; border: 1px solid #ddd;">
+            <button onclick="toggleAdmin()" style="width:100%; background:var(--rose); color:white; border:none; padding:8px; border-radius:10px; cursor:pointer; margin-top: 5px;">Save & Close</button>
+        </div>
+
+        <div id="content-view">
+            <div class="img-wrapper"><img src="img1.jpg" id="disp-img"></div>
+            <h1 id="disp-title">For Mary...</h1>
+            <p class="quote-text" id="disp-quote">I've gathered our best moments here. Ready to look back?</p>
+            
+            <div class="btn-container" id="controls">
+                <button class="btn btn-next" onclick="changeStep(1)">Begin Journey</button>
+            </div>
+            
+            <button id="setup-trigger" onclick="toggleAdmin()">⚙️</button>
+        </div>
     </div>
 
-    <button id="toTopBtn" onclick="window.scrollTo(0,0)">↑</button>
-
-    <section class="hero" id="hero-bg" style="background-image: url('img1.jpg');">
-        <h1>For Mary</h1>
-        <div style="font-weight: 600; letter-spacing: 2px;">SCROLL TO BEGIN OUR STORY</div>
-    </section>
-
-    <div id="story-container"></div>
-
-    <section class="proposal-area" id="final">
-        <img src="img5.jpg" class="img-card img5-slot" style="max-width: 420px;">
-        <span class="day-label">The Final Chapter</span>
-        <h2>Will you marry me?</h2>
-        <div class="btn-group">
-            <button class="btn btn-yes" onclick="celebrate()">YES!</button>
-            <button class="btn btn-no" id="no-btn" onmouseover="teleportNo()" ontouchstart="teleportNo()">No</button>
-        </div>
-    </section>
-
     <script>
-        const timeline = [
-            { day: "Feb 7 • Rose Day", title: "Purest Beauty", quote: "Every rose reminds me of your grace.", img: "img1.jpg", slot: "img1-slot" },
-            { day: "Feb 8 • Propose Day", title: "My Only Choice", quote: "I choose you, today and every day.", img: "img2.jpg", slot: "img2-slot" },
-            { day: "Feb 9 • Chocolate Day", title: "Sweetest Love", quote: "You are the sweetness in my life.", img: "img3.jpg", slot: "img3-slot" },
-            { day: "Feb 10 • Teddy Day", title: "Warm Hugs", quote: "My arms are your permanent home.", img: "img4.jpg", slot: "img4-slot" }
+        let timeline = [
+            { title: "Feb 7: Rose Day", quote: "Every rose reminds me of your grace.", img: "img1.jpg" },
+            { title: "Feb 8: Propose Day", quote: "My heart made its choice long ago.", img: "img2.jpg" },
+            { title: "Feb 9: Chocolate Day", quote: "You're the sweetness in my life.", img: "img3.jpg" },
+            { title: "Feb 10: Teddy Day", quote: "Sending you a hug you can keep forever.", img: "img4.jpg" },
+            { title: "Will You Marry Me?", quote: "Mary, let's make every day a beautiful memory. Forever?", img: "img5.jpg" }
         ];
 
-        // Build Sections
-        const container = document.getElementById('story-container');
-        timeline.forEach(item => {
-            const sec = document.createElement('section');
-            sec.className = 'story-section';
-            sec.innerHTML = `
-                <span class="day-label">${item.day}</span>
-                <h2>${item.title}</h2>
-                <img src="${item.img}" class="img-card ${item.slot}">
-                <p class="quote">"${item.quote}"</p>
-            `;
-            container.appendChild(sec);
-        });
+        let step = -1;
 
-        // Image Preview Function
-        function previewImg(event, slotClass) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                const elements = document.getElementsByClassName(slotClass);
-                for(let el of elements) { el.src = reader.result; }
-                if(slotClass === 'img1-slot') {
-                    document.getElementById('hero-bg').style.backgroundImage = `url(${reader.result})`;
-                }
+        function toggleAdmin() {
+            const panel = document.getElementById('admin-panel');
+            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+            
+            // Set music if URL is present
+            const mUrl = document.getElementById('music-url').value;
+            if(mUrl && step === -1) { 
+                document.getElementById('music-src').src = mUrl; 
+                document.getElementById('bg-music').load(); 
             }
+        }
+
+        function previewImg(event, index) {
+            const reader = new FileReader();
+            reader.onload = function() { 
+                timeline[index].img = reader.result;
+                if(step === index) document.getElementById('disp-img').src = reader.result;
+            };
             reader.readAsDataURL(event.target.files[0]);
         }
 
-        // Standard Scroll Animation
-        const obs = new IntersectionObserver(entries => {
-            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.story-section').forEach(s => obs.observe(s));
+        function changeStep(dir) {
+            step += dir;
+            if (step < 0) {
+                // Reset to Home
+                step = -1;
+                document.getElementById('disp-img').src = timeline[0].img;
+                document.getElementById('disp-title').innerText = "For Mary...";
+                document.getElementById('disp-quote').innerText = "I've gathered our best moments here. Ready to look back?";
+                document.getElementById('controls').innerHTML = `<button class="btn btn-next" onclick="changeStep(1)">Begin Journey</button>`;
+            } else if (step < timeline.length) {
+                render();
+            } else {
+                celebrate();
+            }
+            
+            // Music Play on Interaction
+            const a = document.getElementById('bg-music');
+            if(a.paused && document.getElementById('music-src').src) a.play();
+        }
 
-        // Final Celebration
-        function celebrate() {
-            document.getElementById('final').innerHTML = `<h1 style="font-family:'Dancing Script'; font-size:4rem; color:var(--rose)">YES! ❤️</h1><p>I love you forever!</p>`;
-            document.getElementById('toTopBtn').style.display = 'block';
-            setInterval(() => {
-                const h = document.createElement('div');
-                h.className = 'heart'; h.innerHTML = '❤️';
-                h.style.left = Math.random()*100+'vw'; h.style.top = '100vh';
-                document.body.appendChild(h);
-                setTimeout(() => h.remove(), 4000);
-            }, 300);
+        function render() {
+            const data = timeline[step];
+            document.getElementById('disp-img').src = data.img;
+            document.getElementById('disp-title').innerText = data.title;
+            document.getElementById('disp-quote').innerText = data.quote;
+
+            let btns = `<button class="btn btn-back" onclick="changeStep(-1)">Back</button>`;
+            if (step === timeline.length - 1) {
+                btns += `<button class="btn btn-next" style="background:#27ae60" onclick="changeStep(1)">YES!</button>
+                         <button class="btn btn-no" id="no-btn" onmouseover="teleportNo()" ontouchstart="teleportNo()">No</button>`;
+            } else {
+                btns += `<button class="btn btn-next" onclick="changeStep(1)">Next</button>`;
+            }
+            document.getElementById('controls').innerHTML = btns;
+            spawnHeart();
         }
 
         function teleportNo() {
             const btn = document.getElementById('no-btn');
-            const pad = 60;
+            const pad = 50;
             const x = Math.max(pad, Math.random() * (window.innerWidth - btn.offsetWidth - pad));
             const y = Math.max(pad, Math.random() * (window.innerHeight - btn.offsetHeight - pad));
             btn.style.position = 'fixed'; btn.style.left = x+'px'; btn.style.top = y+'px';
+            btn.style.zIndex = "1000";
+        }
+
+        function celebrate() {
+            document.getElementById('setup-trigger').style.display = 'none';
+            document.querySelector('.main-card').innerHTML = `
+                <h1 style="font-family:'Dancing Script'; font-size:3rem;">Forever Yours! ❤️</h1>
+                <p>I love you, Mary!</p>
+                <div class="img-wrapper"><img src="${timeline[4].img}"></div>
+                <button class="btn btn-next" onclick="location.reload()" style="margin-top:10px">See it again</button>
+            `;
+            setInterval(spawnHeart, 200);
+        }
+
+        function spawnHeart() {
+            const h = document.createElement('div');
+            h.className = 'heart'; h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw'; h.style.top = '100vh';
+            h.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 4000);
         }
     </script>
 </body>
