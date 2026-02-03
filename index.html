@@ -3,175 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Love Story | Valentine's Week</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>For My Forever | Valentine's Week</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #ff4d6d;
-            --deep-red: #c9184a;
-            --glass: rgba(255, 255, 255, 0.85);
+            --primary: #ff4d6d;
+            --secondary: #ff758f;
+            --dark: #590d22;
+            --glass: rgba(255, 255, 255, 0.9);
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
-        .card {
+        /* Progress Bar at the top */
+        .progress-container {
+            position: fixed;
+            top: 20px;
+            width: 80%;
+            height: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            z-index: 100;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .main-card {
             background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 2.5rem;
-            border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            max-width: 450px;
-            width: 90%;
+            backdrop-filter: blur(15px);
+            width: 95%;
+            max-width: 600px;
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.3);
-            position: relative;
-            z-index: 10;
+            border: 1px solid rgba(255,255,255,0.4);
+            transition: all 0.5s ease;
         }
 
-        .couple-img {
-            
-            height: 250px;
+        .img-container {
+            width: 100%;
+            margin-bottom: 30px;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .img-container img {
+            width: 100%; /* Removes fixed width for attractiveness */
+            height: auto;
+            max-height: 350px;
             object-fit: cover;
-            border-radius: 20px;
-            margin-bottom: 1.5rem;
-            border: 5px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: 0.5s ease;
+            display: block;
+            transition: transform 0.5s ease;
         }
 
-        h1 { font-family: 'Dancing Script', cursive; color: var(--deep-red); font-size: 2.5rem; margin: 10px 0; }
-        h2 { color: var(--accent); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
-        p { color: #444; font-style: italic; font-size: 1.1rem; min-height: 60px; }
+        .day-badge {
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
 
-        .btn-group { display: flex; justify-content: center; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+        h1 { font-family: 'Dancing Script', cursive; color: var(--dark); font-size: 3rem; margin: 10px 0; }
+        .quote { font-style: italic; color: #666; font-size: 1.1rem; line-height: 1.6; margin: 20px 0; }
+
+        .btn-group { margin-top: 30px; position: relative; height: 60px; }
 
         .btn {
-            padding: 12px 30px;
+            padding: 15px 40px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-decoration: none;
-            display: inline-block;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
-        .btn-primary { background: var(--accent); color: white; box-shadow: 0 4px 15px rgba(255,77,109,0.4); }
-        .btn-primary:hover { transform: scale(1.05); background: var(--deep-red); }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(255,77,109,0.3); }
+        .btn-primary:hover { background: var(--dark); transform: translateY(-3px); }
 
-        .btn-no { background: #666; color: white; position: relative; }
+        #no-btn { 
+            background: #eee; color: #666; position: absolute; left: 50%; margin-left: 20px;
+        }
 
-        .hidden { display: none; }
-
-        /* Floating Hearts */
-        .heart {
-            position: fixed;
+        .heart-particle {
+            position: absolute;
             pointer-events: none;
-            z-index: 1;
-            animation: moveUp 4s linear forwards;
+            animation: floatUp 4s forwards;
         }
 
-        @keyframes moveUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-500px) scale(1.5); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <div id="content-box">
-            <img src="img1.jpg" id="display-img" class="couple-img" alt="Our Memories">
-            <h2 id="day-label">Valentine's Week</h2>
-            <h1 id="title">A Journey of Us</h1>
-            <p id="quote">Click below to start a beautiful walk down memory lane...</p>
-            
-            <div class="btn-group" id="action-area">
-                <button class="btn btn-primary" onclick="nextStep()">Start Our Adventure ❤️</button>
-            </div>
+    <div class="progress-container"><div id="progress-bar"></div></div>
+
+    <div class="main-card" id="card">
+        <div class="img-container">
+            <img src="img1.jpg" id="hero-img">
+        </div>
+        <div id="day-badge" class="day-badge">CHAPTER ONE</div>
+        <h1 id="title">A Message for You</h1>
+        <p class="quote" id="quote">Before we start the week, I wanted to create something as beautiful as your smile. Are you ready?</p>
+        
+        <div class="btn-group" id="btn-container">
+            <button class="btn btn-primary" onclick="nextStep()">Open My Heart ❤️</button>
         </div>
     </div>
 
     <script>
-        const timeline = [
-            { day: "Feb 7: Rose Day", title: "Pure Elegance", quote: "Just like a rose, your love adds fragrance and beauty to my world every single day.", img: "img1.jpg" },
-            { day: "Feb 8: Propose Day", title: "My Lifetime Vow", quote: "I don't just want you for today; I want you for every tomorrow we can possibly have.", img: "img2.jpg" },
-            { day: "Feb 9: Chocolate Day", title: "Sweet Moments", quote: "Life is bitter-sweet, but with you, it's mostly just the sweetest chocolate imaginable.", img: "img3.jpg" },
-            { day: "Feb 10: Teddy Day", title: "Warm Hugs", quote: "I'm sending you all my warmth today. You're my favorite person to cuddle with.", img: "img4.jpg" },
-            { day: "Feb 11: Promise Day", title: "My Word to You", quote: "I promise to be your biggest fan, your toughest protector, and your best friend forever.", img: "img1.jpg" },
-            { day: "Feb 12: Hug Day", title: "The Safest Place", quote: "In your arms, I have found a home that I never want to leave. You are my sanctuary.", img: "img2.jpg" },
-            { day: "Feb 13: Kiss Day", title: "Sealed with Love", quote: "A thousand words couldn't say what one simple kiss from you tells my heart.", img: "img3.jpg" },
-            { day: "Feb 14: Valentine's Day", title: "The Big Question", quote: "We've walked through the week, now I want to walk through life with you...", img: "img4.jpg" }
+        const story = [
+            { 
+                day: "FEB 7 • ROSE DAY", 
+                title: "You are the Bloom", 
+                quote: "If I had a rose for every time I thought of you, I'd be walking in my garden forever. You are my most beautiful flower.", 
+                img: "img1.jpg" 
+            },
+            { 
+                day: "FEB 8 • PROPOSE DAY", 
+                title: "My Only Choice", 
+                quote: "I don't need the stars, I don't need the moon. I just need you. Today and every day that follows.", 
+                img: "img2.jpg" 
+            },
+            { 
+                day: "FEB 9 • CHOCOLATE DAY", 
+                title: "Sweetest Love", 
+                quote: "Your love is sweeter than any chocolate, more comforting than any treat. You are my daily dose of happiness.", 
+                img: "img3.jpg" 
+            },
+            { 
+                day: "FEB 10 • TEDDY DAY", 
+                title: "Forever Warmth", 
+                quote: "Giving you my heart to hold forever. It's softer and warmer than any teddy could ever be.", 
+                img: "img4.jpg" 
+            },
+            { 
+                day: "FEB 11 • PROMISE DAY", 
+                title: "My Sacred Word", 
+                quote: "I promise to be your strength when you are weak, your laughter when you are sad, and your home forever.", 
+                img: "img1.jpg" 
+            },
+            { 
+                day: "FEB 12 • HUG DAY", 
+                title: "The Perfect Fit", 
+                quote: "The world disappears when you hold me. Your arms are the only place I ever want to be.", 
+                img: "img2.jpg" 
+            },
+            { 
+                day: "FEB 13 • KISS DAY", 
+                title: "A Soul's Connection", 
+                quote: "Every kiss is a story I want to read with you until the very last page of our lives.", 
+                img: "img3.jpg" 
+            },
+            { 
+                day: "FEB 14 • VALENTINE'S DAY", 
+                title: "The Ultimate Dream", 
+                quote: "We've seen the week, but I want to see a lifetime. Mary, you are my heart's eternal home...", 
+                img: "img4.jpg" 
+            }
         ];
 
-        let step = -1;
+        let currentStep = -1;
 
         function nextStep() {
-            step++;
-            if (step < timeline.length) {
-                updateUI();
-                spawnHearts();
+            currentStep++;
+            if (currentStep < story.length) {
+                updateContent();
+                createHearts();
             } else {
-                showProposal();
+                launchProposal();
             }
         }
 
-        function updateUI() {
-            const data = timeline[step];
-            document.getElementById('display-img').src = data.img;
-            document.getElementById('day-label').innerText = data.day;
-            document.getElementById('title').innerText = data.title;
-            document.getElementById('quote').innerText = data.quote;
+        function updateContent() {
+            const item = story[currentStep];
+            const card = document.getElementById('card');
             
-            const btn = document.querySelector('.btn-primary');
-            btn.innerText = (step === timeline.length - 1) ? "Final Surprise 💍" : "Next Day →";
+            // Progress calculation
+            const progress = ((currentStep + 1) / story.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + "%";
+
+            // Update UI with a small fade effect
+            card.style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById('hero-img').src = item.img;
+                document.getElementById('day-badge').innerText = item.day;
+                document.getElementById('title').innerText = item.title;
+                document.getElementById('quote').innerText = item.quote;
+                
+                const mainBtn = document.querySelector('.btn-primary');
+                mainBtn.innerText = (currentStep === story.length - 1) ? "Final Surprise 💍" : "Continue Our Story →";
+                card.style.opacity = "1";
+            }, 300);
         }
 
-        function showProposal() {
-            document.getElementById('day-label').innerText = "The Forever Choice";
-            document.getElementById('title').innerText = "Marry Me?";
-            document.getElementById('quote').innerText = "Mary, you are my everything. Will you make me the luckiest person and say Yes?";
-            document.getElementById('display-img').src = "img1.jpg"; // Use your best picture here
+        function launchProposal() {
+            document.getElementById('day-badge').innerText = "FOREVER & ALWAYS";
+            document.getElementById('title').innerText = "Marry Me, Mary?";
+            document.getElementById('quote').innerText = "I promise to love you, cherish you, and annoy you for the rest of our days. Will you make me the luckiest person on Earth?";
             
-            document.getElementById('action-area').innerHTML = `
-                <button class="btn btn-primary" style="background:#2ecc71" onclick="celebrate()">YES!</button>
-                <button class="btn btn-no" id="no-btn" onmouseover="moveNo()" onclick="moveNo()">No</button>
+            const btnContainer = document.getElementById('btn-container');
+            btnContainer.innerHTML = `
+                <button class="btn btn-primary" style="background:#2ecc71; margin-right: 120px;" onclick="finalCelebration()">YES!</button>
+                <button class="btn" id="no-btn" onmouseover="moveNo()" onclick="moveNo()">No</button>
             `;
         }
 
         function moveNo() {
             const btn = document.getElementById('no-btn');
-            const x = Math.random() * (window.innerWidth - 100);
+            const x = Math.random() * (window.innerWidth - 150);
             const y = Math.random() * (window.innerHeight - 50);
             btn.style.position = 'fixed';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
-        function celebrate() {
-            document.getElementById('content-box').innerHTML = `
-                <img src="img2.jpg" class="couple-img">
-                <h1>SHE SAID YES! 💍</h1>
-                <p>I love you forever! This is the start of our forever journey together.</p>
+        function finalCelebration() {
+            document.getElementById('card').innerHTML = `
+                <h1 style="font-size: 4rem;">YES!! ❤️</h1>
+                <p class="quote">My heart is officially yours forever. I love you!</p>
+                <img src="img1.jpg" style="width:100%; border-radius: 20px; margin-top:20px;">
             `;
-            setInterval(spawnHearts, 200);
+            setInterval(createHearts, 150);
         }
 
-        function spawnHearts() {
+        function createHearts() {
             const heart = document.createElement('div');
-            heart.classList.add('heart');
             heart.innerHTML = '❤️';
+            heart.className = 'heart-particle';
             heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
             heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 4000);
