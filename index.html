@@ -3,227 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For My Forever | Mary</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Our Story | Mary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff4d6d;
-            --dark: #590d22;
-            --glass: rgba(255, 255, 255, 0.92);
+            --rose-gold: #e5b3a3;
+            --deep-blush: #ff4d6d;
+            --luxury-dark: #2d131a;
+            --glass: rgba(255, 255, 255, 0.9);
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at center, #fff5f5 0%, #fad0c4 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Prevents scrolling when button moves */
-            touch-action: manipulation;
+            overflow: hidden;
         }
 
-        .progress-container {
+        .progress-bar-container {
             position: fixed;
-            top: 15px;
-            width: 85%;
-            height: 4px;
-            background: rgba(255,255,255,0.3);
+            top: 20px;
+            width: 70%;
+            height: 3px;
+            background: rgba(0,0,0,0.05);
             border-radius: 10px;
         }
 
-        #progress-bar {
+        #progress {
             width: 0%;
             height: 100%;
-            background: var(--primary);
-            border-radius: 10px;
-            transition: width 0.4s ease;
+            background: var(--deep-blush);
+            transition: width 0.5s ease;
         }
 
         .main-card {
             background: var(--glass);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
             width: 90%;
-            max-width: 500px;
-            border-radius: 30px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 450px;
+            border-radius: 40px;
+            padding: 35px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.7);
             z-index: 10;
         }
 
-        .img-container {
+        .img-wrapper {
             width: 100%;
-            border-radius: 20px;
+            height: 250px;
+            border-radius: 25px;
             overflow: hidden;
             margin-bottom: 20px;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.08);
+            border: 4px solid white;
         }
 
-        .img-container img {
-             
-            height: auto;
-            max-height: 300px;
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            display: block;
         }
 
-        .day-badge {
-            background: var(--primary);
-            color: white;
-            padding: 6px 15px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 10px;
-            text-transform: uppercase;
+        h1 { font-family: 'Playfair Display', serif; color: var(--luxury-dark); font-size: 2rem; margin: 10px 0; }
+        
+        .quote-text { 
+            font-size: 0.95rem; 
+            color: #555; 
+            min-height: 70px; 
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
 
-        h1 { font-family: 'Dancing Script', cursive; color: var(--dark); font-size: 2.5rem; margin: 10px 0; }
-        .quote { font-style: italic; color: #555; font-size: 1rem; line-height: 1.5; margin: 15px 0; min-height: 3em; }
-
-        .btn-group { 
-            margin-top: 25px; 
-            display: flex; 
-            justify-content: center; 
-            gap: 15px;
-            min-height: 60px;
-            position: relative;
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
         }
 
         .btn {
-            padding: 12px 30px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 50px;
-            cursor: pointer;
+            border-radius: 12px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            white-space: nowrap;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-no { background: #dee2e6; color: #6c757d; position: relative; }
+        .btn-next { background: var(--luxury-dark); color: white; flex: 2; }
+        .btn-back { background: #eee; color: #777; flex: 1; }
+        
+        .hidden { display: none; }
 
-        .heart {
-            position: absolute;
+        .floating-heart {
+            position: fixed;
             pointer-events: none;
-            animation: floatUp 3s linear forwards;
-            z-index: 0;
+            animation: fly 4s linear forwards;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        @keyframes fly {
+            0% { transform: translateY(100vh); opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="progress-container"><div id="progress-bar"></div></div>
+    <div class="progress-bar-container"><div id="progress"></div></div>
 
-    <div class="main-card" id="card">
-        <div class="img-container">
-            <img src="img1.jpg" id="hero-img">
-        </div>
-        <div id="day-badge" class="day-badge">The Beginning</div>
-        <h1 id="title">Hey Mary...</h1>
-        <p class="quote" id="quote">I've been keeping a few secrets this week. Want to see what they are?</p>
-        
-        <div class="btn-group" id="btn-container">
-            <button class="btn btn-primary" onclick="nextStep()">Start the Week ❤️</button>
+    <div class="main-card">
+        <div id="content">
+            <div class="img-wrapper"><img src="img1.jpg" id="disp-img"></div>
+            <h1 id="disp-title">Dearest Mary...</h1>
+            <p class="quote-text" id="disp-quote">I've put together our favorite moments. Shall we look back?</p>
+            
+            <div class="btn-container" id="controls">
+                <button class="btn btn-next" onclick="changeStep(1)">Begin Journey</button>
+            </div>
         </div>
     </div>
 
     <script>
-        const story = [
-            { day: "FEB 7 • ROSE DAY", title: "Eternal Bloom", quote: "Like a rose, your beauty only grows deeper with time. You are the grace in my life.", img: "img1.jpg" },
-            { day: "FEB 8 • PROPOSE DAY", title: "My Only Vow", quote: "I don't just want a season with you; I want every sunrise and sunset for the rest of my life.", img: "img2.jpg" },
-            { day: "FEB 9 • CHOCOLATE DAY", title: "Sweetest Soul", quote: "You are the sweetness that makes the bitter parts of life disappear. I'm addicted to you.", img: "img3.jpg" },
-            { day: "FEB 10 • TEDDY DAY", title: "Always Near", quote: "When I'm not there to hold you, I hope you feel my love surrounding you like a warm embrace.", img: "img4.jpg" },
-            { day: "FEB 11 • PROMISE DAY", title: "Hand in Hand", quote: "I promise to walk beside you, never in front or behind, through every chapter we write.", img: "img1.jpg" },
-            { day: "FEB 12 • HUG DAY", title: "My Safe Haven", quote: "Your hug is the only medicine I need. It's the place where my heart finally feels at peace.", img: "img2.jpg" },
-            { day: "FEB 13 • KISS DAY", title: "Soul's Whisper", quote: "A kiss from you is a spark that lights up my entire soul. You are my magic.", img: "img3.jpg" },
-            { day: "FEB 14 • VALENTINE'S DAY", title: "One Last Thing", quote: "Mary, we've shared a week of love... now I have one very important question left.", img: "img4.jpg" }
+        const timeline = [
+            { title: "Feb 7: Rose Day", quote: "You are the bloom that never fades in my heart.", img: "img1.jpg" },
+            { title: "Feb 8: Propose Day", title2: "My Only Choice", quote: "Every day, I'd choose you over and over again.", img: "img2.jpg" },
+            { title: "Feb 9: Chocolate Day", quote: "Your love is the sweetness I need to get through any day.", img: "img3.jpg" },
+            { title: "Feb 10: Teddy Day", quote: "Sending you a hug that you can hold onto forever.", img: "img4.jpg" },
+            { title: "Feb 11: Promise Day", quote: "I promise to be your home and your safest place.", img: "img1.jpg" },
+            { title: "Feb 12: Hug Day", quote: "In your arms, the rest of the world just disappears.", img: "img2.jpg" },
+            { title: "Feb 13: Kiss Day", quote: "Every kiss tells the story of how much I love you.", img: "img3.jpg" },
+            { title: "Feb 14: Valentine's Day", quote: "We've seen the week... now let's talk about our future.", img: "img4.jpg" }
         ];
 
-        let currentStep = -1;
+        let step = -1;
 
-        function nextStep() {
-            currentStep++;
-            if (currentStep < story.length) {
-                updateUI();
-                spawnHeart();
-            } else {
-                launchProposal();
-            }
+        function changeStep(direction) {
+            step += direction;
+            if (step < 0) { step = -1; resetToStart(); }
+            else if (step < timeline.length) { renderUI(); }
+            else { renderProposal(); }
         }
 
-        function updateUI() {
-            const item = story[currentStep];
-            document.getElementById('hero-img').src = item.img;
-            document.getElementById('day-badge').innerText = item.day;
-            document.getElementById('title').innerText = item.title;
-            document.getElementById('quote').innerText = item.quote;
-            
-            const progress = ((currentStep + 1) / story.length) * 100;
-            document.getElementById('progress-bar').style.width = progress + "%";
-
-            const btn = document.querySelector('.btn-primary');
-            btn.innerText = (currentStep === story.length - 1) ? "Final Question 💍" : "Next Day →";
+        function resetToStart() {
+            document.getElementById('disp-img').src = "img1.jpg";
+            document.getElementById('disp-title').innerText = "Dearest Mary...";
+            document.getElementById('disp-quote').innerText = "I've put together our favorite moments. Shall we look back?";
+            document.getElementById('progress').style.width = "0%";
+            document.getElementById('controls').innerHTML = `<button class="btn btn-next" onclick="changeStep(1)">Begin Journey</button>`;
         }
 
-        function launchProposal() {
-            document.getElementById('day-badge').innerText = "FOREVER";
-            document.getElementById('title').innerText = "Marry Me?";
-            document.getElementById('quote').innerText = "I want to grow old with you. Will you make me the happiest person in the world?";
+        function renderUI() {
+            const data = timeline[step];
+            document.getElementById('disp-img').src = data.img;
+            document.getElementById('disp-title').innerText = data.title;
+            document.getElementById('disp-quote').innerText = data.quote;
             
-            const container = document.getElementById('btn-container');
-            container.innerHTML = `
-                <button class="btn btn-primary" style="background:#2ecc71" onclick="celebrate()">YES!</button>
-                <button class="btn btn-no" id="no-btn" onmouseover="moveNo()" onclick="moveNo()" ontouchstart="moveNo()">No</button>
+            const progress = ((step + 1) / timeline.length) * 100;
+            document.getElementById('progress').style.width = progress + "%";
+
+            document.getElementById('controls').innerHTML = `
+                <button class="btn btn-back" onclick="changeStep(-1)">Back</button>
+                <button class="btn btn-next" onclick="changeStep(1)">${step === timeline.length-1 ? "Final Step" : "Next"}</button>
+            `;
+            spawnHeart();
+        }
+
+        function renderProposal() {
+            document.getElementById('disp-title').innerText = "Marry Me?";
+            document.getElementById('disp-quote').innerText = "I want every week to be as special as this one. Will you marry me?";
+            document.getElementById('controls').innerHTML = `
+                <button class="btn btn-next" style="background:#27ae60" onclick="celebrate()">YES!</button>
+                <button class="btn btn-back" id="no-btn" onmouseover="teleport()">No</button>
             `;
         }
 
-        function moveNo() {
+        function teleport() {
             const btn = document.getElementById('no-btn');
-            const padding = 50; // Keep button 50px away from any edge
-            
-            // Calculate available safe space
-            const maxWidth = window.innerWidth - btn.offsetWidth - padding;
-            const maxHeight = window.innerHeight - btn.offsetHeight - padding;
-
-            // Generate random positions within safe bounds
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxWidth));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxHeight));
-
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
             btn.style.position = 'fixed';
-            btn.style.left = randomX + 'px';
-            btn.style.top = randomY + 'px';
-            btn.style.zIndex = "999";
+            btn.style.left = x + 'px'; btn.style.top = y + 'px';
         }
 
         function celebrate() {
-            document.getElementById('card').innerHTML = `
-                <img src="img1.jpg" style="width:100%; border-radius: 20px;">
-                <h1>YES! ❤️</h1>
-                <p>I love you more than words can say. See you forever, Mary!</p>
-            `;
+            document.querySelector('.main-card').innerHTML = `<h1>Forever Yours! ❤️</h1><p>I love you, Mary!</p><img src="img1.jpg" style="width:100%; border-radius:15px;">`;
             setInterval(spawnHeart, 200);
         }
 
         function spawnHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.top = '100vh';
-            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 3000);
+            const h = document.createElement('div');
+            h.className = 'floating-heart';
+            h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 4000);
         }
     </script>
 </body>
